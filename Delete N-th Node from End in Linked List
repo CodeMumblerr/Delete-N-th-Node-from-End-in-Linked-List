@@ -1,0 +1,52 @@
+# Python program to delete the N-th node from the end of a singly linked list
+
+class ListNode:
+    def __init__(self, val):
+        self.data = val
+        self.next = None
+
+# Function to delete the N-th node from the end
+def delete_from_end(start, n):
+    first = start
+    second = start
+
+    # Advance the first pointer by n steps
+    for _ in range(n):
+        if first is None:
+            return start
+        first = first.next
+
+    # If first is None after moving n steps, remove the first node
+    if first is None:
+        return start.next
+
+    # Move both pointers until first reaches the last node
+    while first.next is not None:
+        first = first.next
+        second = second.next
+
+    # Remove the target node
+    second.next = second.next.next
+
+    return start
+
+# Function to print linked list
+def display_list(head):
+    current = head
+    while current:
+        print(current.data, end=" -> ")
+        current = current.next
+    print("None")
+
+if __name__ == "__main__":
+    # Example: 11 -> 22 -> 33 -> 44 -> 55
+    head = ListNode(11)
+    head.next = ListNode(22)
+    head.next.next = ListNode(33)
+    head.next.next.next = ListNode(44)
+    head.next.next.next.next = ListNode(55)
+
+    position_from_end = 3
+    head = delete_from_end(head, position_from_end)
+
+    display_list(head)
